@@ -8,6 +8,8 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _cors = _interopRequireDefault(require("cors"));
 
+var _fs = _interopRequireDefault(require("fs"));
+
 var _validations = require("./validations.js");
 
 var _index = require("./controllers/index.js");
@@ -26,6 +28,10 @@ var app = (0, _express["default"])();
 
 var storage = _multer["default"].diskStorage({
   destination: function destination(_, __, cb) {
+    if (!_fs["default"].existsSync('uploads')) {
+      _fs["default"].mkdirSync('uploads');
+    }
+
     cb(null, "uploads");
   },
   filename: function filename(_, file, cb) {
